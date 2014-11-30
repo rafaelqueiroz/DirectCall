@@ -30,7 +30,7 @@ class DirectCallComponent extends Component {
 	 * @return mixed
 	 */
 	public function get($params) {
-		$params  = array_merge($params, $this->params);
+		$params  = array_merge($this->params, $params);
 		if (!$this->_validateRequest($params))
 			throw new CakeException('Campos obrigatorios ausentes');
 
@@ -41,7 +41,7 @@ class DirectCallComponent extends Component {
 		if ($params['formato'] !== 'json')
 			return $request->body;
 
-		return (array) json_decode($request->body);
+		return json_decode($request->body);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class DirectCallComponent extends Component {
 	 * @return bool
 	 */
 	protected function _validateRequest($params) {
-		$keys = array('login', 'senha', 'pin', 'api', 'dataInicial', 'dataFinal', 'mostrarPlayer', 'formato');
+		$keys = array('pin', 'api', 'dataInicial', 'dataFinal', 'mostrarPlayer', 'formato');
 		while ($keys) {
 			if (empty ($params[array_shift($keys)]))
 				return false;
